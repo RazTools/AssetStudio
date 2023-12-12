@@ -10,6 +10,8 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Kyaru.Texture2DDecoder" Version="0.17.0" />
+    <PackageReference Include="Kyaru.Texture2DDecoder.Windows" Version="0.1.0" />
     <PackageReference Include="Mono.Cecil" Version="0.11.3" />
     <PackageReference Include="SixLabors.ImageSharp.Drawing" Version="1.0.0-beta13" />
   </ItemGroup>
@@ -18,7 +20,6 @@
     <ProjectReference Include="..\AssetStudio.PInvoke\AssetStudio.PInvoke.csproj" />
     <ProjectReference Include="..\AssetStudioFBXWrapper\AssetStudioFBXWrapper.csproj" />
     <ProjectReference Include="..\AssetStudio\AssetStudio.csproj" />
-    <ProjectReference Include="..\Texture2DDecoderWrapper\Texture2DDecoderWrapper.csproj" />
   </ItemGroup>
 
 </Project>
