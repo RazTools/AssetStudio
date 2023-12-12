@@ -1,5 +1,4 @@
-﻿using K4os.Compression.LZ4;
-using System;
+﻿using System;
 using System.IO;
 using System.Linq;
 
@@ -269,7 +268,7 @@ namespace AssetStudio
                 case CompressionType.Lz4HC:
                     {
                         var uncompressedBytes = new byte[uncompressedSize];
-                        var numWrite = LZ4Codec.Decode(blocksInfoBytes, uncompressedBytes);
+                        var numWrite = LZ4.Decompress(blocksInfoBytes, uncompressedBytes);
                         if (numWrite != uncompressedSize)
                         {
                             throw new IOException($"Lz4 decompression error, write {numWrite} bytes but expected {uncompressedSize} bytes");
@@ -339,7 +338,9 @@ namespace AssetStudio
                             reader.Read(compressedBytes, 0, compressedSize);
                             var uncompressedSize = (int)blockInfo.uncompressedSize;
                             var uncompressedBytes = BigArrayPool<byte>.Shared.Rent(uncompressedSize);
-                            var numWrite = LZ4Codec.Decode(compressedBytes, 0, compressedSize, uncompressedBytes, 0, uncompressedSize);
+                            var compressedBytesSpan = compressedBytes.AsSpan(0, compressedSize);
+                            var uncompressedBytesSpan = uncompressedBytes.AsSpan(0, uncompressedSize);
+                            var numWrite = LZ4.Decompress(compressedBytesSpan, uncompressedBytesSpan);
                             if (numWrite != uncompressedSize)
                             {
                                 throw new IOException($"Lz4 decompression error, write {numWrite} bytes but expected {uncompressedSize} bytes");
